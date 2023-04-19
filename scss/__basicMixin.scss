@@ -1,0 +1,60 @@
+// ___переменные___
+$OpenSans:'Open Sans', sans-serif;
+$Roboto:'Roboto', sans-serif;
+
+// ___font___
+$bgRed:RGBA(171, 5, 52, 1);
+$clBlackTitle:#010101;
+$clGrey:#4D4D4D;
+$clBlack:Black;
+// ___mixin___
+
+@mixin container($width){
+    max-width: $width;
+    margin: 0 auto;
+    width: 96%;
+}
+
+@mixin media($maxWidth){
+    @media screen and (max-width:$maxWidth){
+        @content
+    }
+}
+
+%fl-wr-spBetween{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+%flex-center{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+// link hover
+%hoverlink{
+    color: black;
+    text-decoration: underline;
+}
+
+//btn hover 
+@mixin hoverBtn($btnCl, $bntBoxSh, $btnBg){
+    color:$btnCl;
+    box-shadow: 4px 2px 3px 2px $bntBoxSh;
+    background: $btnBg;
+}
+
+// animation
+@mixin animation-mixin($name, $toCl, $fromCl) {
+    @keyframes #{$name} {
+        0% {
+            background: $toCl;
+            border: 1px solid #0000009c;
+        }
+        100% {
+            background: $fromCl;
+            border: 2px solid #fff;
+        }
+    }
+}
+
