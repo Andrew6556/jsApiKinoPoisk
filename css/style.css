@@ -79,6 +79,12 @@ h1, h2, h3, h4, h5, h6 {
   flex-direction: column;
 }
 
+.header__wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
 .header__topContent {
   display: flex;
   align-items: center;
@@ -136,6 +142,7 @@ h1, h2, h3, h4, h5, h6 {
 .header {
   height: 100vh;
   background: #18181B;
+  background: #2C2C55;
 }
 .header__top {
   font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
@@ -155,15 +162,21 @@ h1, h2, h3, h4, h5, h6 {
 .header__logoDecor {
   display: flex;
   justify-content: center;
-  color: #79109D;
+  color: #bf00ff;
+  font-weight: 500;
 }
 .header .form {
-  width: 300px;
+  width: 400px;
   display: flex;
   background: white;
   border: 1px solid #79109D;
   border-radius: 50px;
   height: 40px;
+}
+.header .form__btn {
+  display: flex;
+  align-self: center;
+  padding-right: 20px;
 }
 .header__searchBox {
   font-size: 18px;
@@ -180,8 +193,33 @@ h1, h2, h3, h4, h5, h6 {
 .header__searchBox::placeholder {
   color: gray;
 }
-.header .form__btn {
-  display: flex;
-  align-self: center;
-  padding-right: 20px;
+.header__content {
+  margin-top: 10px;
+}
+.header__title {
+  color: white;
+  font-size: 36px;
+  text-align: center;
+  margin-bottom: 10px;
+}
+.header__wrapper {
+  justify-content: center;
+}
+.header__FactFilm {
+  width: 450px;
+  height: 450px;
+  background: linear-gradient(109.69deg, rgba(29, 66, 162, 0.6) 12.26%, rgba(53, 72, 222, 0.6) 49.27%, rgba(0, 0, 0, 0.6) 65.36%, rgba(255, 0, 79, 0.6) 87.89%, rgba(73, 49, 71, 0.6) 115.24%);
+  margin-right: 20px;
+  border-radius: 20px;
+  padding: 30px;
+}
+.header__FactFilm-title {
+  font-size: 30px;
+  text-align: center;
+}
+.header__films {
+  width: 450px;
+  height: 450px;
+  background: #79109D;
+  border-radius: 20px;
 }
