@@ -1,2 +1,46 @@
 @import "__resetSetting";
 @import "__basicMixin.scss";
+@import "__basicModal.scss";
+
+.container{
+    @include container(1200px)
+}
+
+.header {
+    height: 100vh;
+    background: #18181B;
+    &__top {
+        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        background: #222228CC;
+        display: flex;
+        align-items: center;
+        padding: 15px 0;
+        color: white;
+    }
+    &__topContent {
+        @extend %flex-center;
+        justify-content: space-between;
+        
+    }
+    &__logo {
+        font-size: 22px;
+        line-height: 25px;
+    }
+    &__logoDecor{
+        display: flex;
+        justify-content: center;
+        color: #79109D;
+    }
+    &__search-Wrapper{
+        width: 300px;
+    }
+    &__searchBox {
+            height: 40px;
+            font-size: 18px;
+            color:red;
+            width: 100%;
+            border-radius: 50px;
+            transition: all 500ms ease;
+            padding: 0 30px;
+    }
+}
