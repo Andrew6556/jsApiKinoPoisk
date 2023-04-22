@@ -5,17 +5,21 @@ export default class Card{
         this.wrapper = document.createElement("div");
         this.wrapper.classList.add("card");
         this.wrapper.innerHTML = `
-                <div class="card__img block__img">
-                    <img class="card__image-item" src="${data.url}" alt="#" >
+                <div class="card__img">
+                    <img class="card__img-item" src="${data.posterUrl}" alt="#">
                 </div>
-                <div class="card__title title">${data.name}</div>
-                <div class="card__buttons">
-                    <button class="card__btn card__btn_open">Open</button>
-                    <button class="card__btn card__btn_del">Delete</button>
+                <div class="card__title">${data.nameRu}</div>
+                <div class="card__inner">
+                    <div class="card__wrapper">
+                        <p class="card__text">Режиссер:<span class="card__decor">Классный</span></p>
+                        <p class="card__text">Год выпуска:<span class="card__decor">${data.year}</span></p>
+                        <p class="card__text">Оценка зрителей:<span class="card__decor">${data.ratingKinopoisk}</span></p>
+                    </div>
+                    <button class="card__btn btn">Узнать больше</button>
                 </div>`;
-        this.wrapper.querySelector(".card__btn_del").addEventListener("click", () =>{
-            this.wrapper.classList.add('animate');
-            setTimeout(() => this.wrapper.remove(), 1000);
-        })
+        // this.wrapper.querySelector(".card__btn_del").addEventListener("click", () =>{
+        //     this.wrapper.classList.add('animate');
+        //     setTimeout(() => this.wrapper.remove(), 1000);
+        // })
     }
 }

@@ -92,16 +92,12 @@
             font-size: 30px;
         }
     }
-    &__films {
-        width: 450px;
-        height: 450px;
-        border-radius: 20px;
-        box-shadow: 1px 1px 2px 3px rgba(255, 255, 255, 0.349);
-    }
 }
 .card{
-    height: 100%;
-    width: 100%;
+    width: 450px;
+    height: 450px;
+    border-radius: 20px;
+    box-shadow: 1px 1px 2px 3px rgba(255, 255, 255, 0.445);
     &__img{
         height: 60%;
         &-item{
