@@ -7,7 +7,7 @@
 }
 
 .header {
-    height: 100vh;
+    height: 105vh;
     background: #18181B;
     background: #2C2C55;
     &__top {
@@ -37,7 +37,7 @@
         width: 400px;
         display: flex;
         background: white;
-        border: 1px solid #79109D;
+        box-shadow: rgb(153, 35, 72) 0px 30px 90px;
         border-radius: 50px;
         height: 40px;
         &__btn{
@@ -78,15 +78,82 @@
         margin-right: 20px;
         border-radius: 20px;
         padding: 30px;
+        color: white;
+        text-align: center;
         &-title{
             font-size: 30px;
-            text-align: center;
+            margin-bottom: 30px;
+        }
+        &-text{
+            line-height: 30px;
+            font-size: 22px;
+        }
+        &-decor{
+            font-size: 30px;
         }
     }
     &__films {
         width: 450px;
         height: 450px;
-        background: #79109D;
         border-radius: 20px;
+        box-shadow: 1px 1px 2px 3px rgba(255, 255, 255, 0.349);
+    }
+}
+.card{
+    height: 100%;
+    width: 100%;
+    &__img{
+        height: 60%;
+        &-item{
+            object-fit:fill;
+            width: 100%;
+            height: 100%;
+            border-radius: 20px;
+        }
+    }
+    &__title{
+        text-align: center;
+        color: #bf00ff;
+        font-size: 28px;
+        padding: 8px 0;
+    }
+    .card__inner{
+        padding: 10px 20px;
+    }
+    &__text{
+        color: white;
+        font-size: 20px;
+        padding: 5px 0;
+    }
+    &__decor{
+        color: rgba(253, 253, 253, 0.712);
+        text-transform: uppercase;
+        font-size: 23px;
+        font-weight: 500;
+    }
+    &__wrapper{
+        @extend %fl-wr-spBetween;
+        justify-content: space-around;
+        align-items: center;
+    }
+    &__btn{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 10px;
+        width: 150px;
+        padding: 8px 0px ;
+        transition: all 1s ease-out 0s;
+        font-size: 18px;    
+        color:rgba(253, 253, 253, 0.712);
+        &::after{
+            content:"";
+            display: flex;
+            align-self: center;
+            color: white;
+            background: url("../img/icon/arrow.svg") no-repeat center right;
+            padding: 8px;
+            padding-left: 15px;
+        }
     }
 }
