@@ -37,8 +37,8 @@ export class Slider{
         this.navigation.appendChild(this.prevBtn)
         this.navigation.appendChild(this.nextBtn)
 
-        this.wrapper.appendChild(this.navigation)
         this.wrapper.appendChild(this.slideWrapper)
+        this.wrapper.appendChild(this.navigation)
 
         this.update()
     }
@@ -62,6 +62,6 @@ export class Slider{
         this.slides.forEach(card =>{
             card.style.display = 'none';
         })
-        this.slides[this.currentIndex].style.display = 'flex';
+        this.slides[this.currentIndex].style.display = 'block';
     }
 }
