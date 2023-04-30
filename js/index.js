@@ -6,63 +6,74 @@ import Modal from "../modules/Modal.js";
 import {Slider} from "../modules/slider.js";
 
 
-const   url           = `https://kinopoiskapiunofficial.tech/`,
-        facts         = `api/v2.2/films/{id}/facts`,
-        movie         = `api/v2.2/films/51`,
-        movie_trailer = `api/v2.2/films/{id}/videos`,
-        movie_img     = `api/v2.2/films/{id}/images`;
+        // facts         = `511/facts`,
+        // movie         = `51`,
+        // movie_trailer = `{id}/videos`,
+        // movie_img     = `{id}/images`;
+
+let path_facts    = (id) => `${id}/facts`,
+    films         = (id) => `${id}`,
+    films_trailer = (id) => `${id}/videos`,
+    movie_img     = (id) => `${id}/images`;
+
+
 
 let div_cards  = [],
     data_movie = [];
 
-function Request(count,callBack=""){
+function Request(url,callBack){
     const xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200){
-            console.log(JSON.parse(this.response));
+            // console.log(JSON.parse(this.response))
+
             let response_api = JSON.parse(this.response);
-            
-            callBack(response_api)
+            callBack(response_api);
+            console.log(callBack(response_api))
         }
     };
-    xhr.open('GET', `${url}${movie}${count}`, true);
+    xhr.open('GET', `https://kinopoiskapiunofficial.tech/api/v2.2/films/51${url}`, true);
     xhr.setRequestHeader('Content-type', 'application/json; charset=UTF-8');
     xhr.setRequestHeader("X-API-KEY", '4ed6a4de-1c65-48b4-9d9b-922f9cfbd78e');
     xhr.send();
 }
 for (let count = 0; count < 6; count++){
-    Request(count, (data)=>{
+    Request(films(count),(data)=>{
             data_movie.push({
                 name_movie:data.nameRu,
                 id:data.kinopoiskId,
                 description:data.description,
+                fact: setTimeout(function(){
+                            return Request(path_facts(count), add_fact_about_movie)
+                    },1000)
             })
             div_cards.push(new Card(data).wrapper)
-        })
+        });
+    // setTimeout(function(){
+    //         Request(path_facts(count), add_fact_about_movie,count)
+    // },3000)
+    
 }
-setTimeout(function(){
-    document.querySelector(".header__films").appendChild(new Slider(div_cards).wrapper)
-},1000)
+// setTimeout(function(){
+//     console.log(data_movie)
+//     document.querySelector(".header__films").appendChild(new Slider(div_cards).wrapper)
+// },2000)
+
+function add_fact_about_movie(films_fact){
+    let random_fact = mtRandom(0,films_fact.items.length - 1);
+    console.log(films_fact.items[random_fact].text.replace(/<\/?[^>]+(>|$)/g, ""))
+    return films_fact.items[random_fact].text.replace(/<\/?[^>]+(>|$)/g, "")
+}
 
 
 
-//     Request(count)
-// } 
-// console.log(div_cards)
-// let slider = new Slider(div_cards);
-// document.querySelector(".header__films").appendChild(slider.wrapper);
+// setInterval(function(){
+//     let random_num = mtRandom.call(this,0,JSON.parse(this.response).items.length - 1)
+//     console.log(random_num)
 
-// console.log(data_movie)
-
-// function mtRandom(min){
-//     return Math.floor(Math.random() * ((JSON.parse(this.response).items.length - 1) - min + 1))
-// }
-// готовый вариант смены факта на станице
-            // setInterval(
-            //     function(){
-            //         let random_num = mtRandom.call(this,0)
-            //         console.log(random_num)
-            //         film_fact.innerText = JSON.parse(this.response).items[random_num].text.replace(/<\/?[^>]+(>|$)/g, "")
-            //         // console.log(JSON.parse(xhr.response).items[random_num])
-            //     }.bind(this),20000
-            // )
+//     document.querySelector(".header__FactFilm-text").innerText = JSON.parse(this.response).items[random_num].text.replace(/<\/?[^>]+(>|$)/g, "")
+// }.bind(this),2000
+// )
+function mtRandom(min, max){
+    return Math.floor(Math.random() * (max - min + 1))
+}
