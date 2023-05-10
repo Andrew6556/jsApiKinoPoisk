@@ -57,29 +57,24 @@ function mtRandom(min, max){
 }
 function get_id(data){
     let list_id = data.map(film => film.id)
-    return list_id[mtRandom(0,list_id.length -1)]
+    return list_id[mtRandom(0,list_id.length - 1)]
 }
 
 let count = 0;
 
 setInterval(function(){
     request(path_facts).then(fact=>{
-        let rm_fact_index = mtRandom(0,fact.length -1),
-            rm_id         = get_id(data_movie);
-
-        console.log(fact[rm_fact_index])
+        let rm_id = get_id(data_movie);
+        // Попробуй сократить потом!!!
         while(true){
+            let rm_fact_index = mtRandom(0,fact.length - 1);
             if(fact[rm_fact_index].id == rm_id){
-                console.log(fact[rm_fact_index].id,rm_id)
-                let formatted_fact = fact[rm_fact_index].items[random_fact].text.replace(/<\/?[^>]+(>|$)/g, "")
-                // if ()
-                let a = data_movie.map(film => {
+                console.log(fact[rm_fact_index].id, rm_id)
+                return data_movie.map(film => {
                     if (film.id == fact[rm_fact_index].id){
-                        console.log(film.name)
+                        return [film.name,add_fact_about_movie(fact[rm_fact_index])]
                     }
-                })
-                // return [formatted_fact, data_movie[count].name]
-                // break
+                }).filter(data => data !== undefined)
             }
         }
         
@@ -88,8 +83,7 @@ setInterval(function(){
         if (count == 1){
             document.querySelector(".FactLoading").classList.toggle("FactLoading_active");
         }
-        document.querySelector(".header__FactFilm-text").innerText = random_fact[0];
-        document.querySelector(".header__FactFilm-name").innerText = `Фильм:${random_fact[1]}`;
-        console.log(random_fact)
+        document.querySelector(".header__FactFilm-text").innerText = random_fact[0][1];
+        document.querySelector(".header__FactFilm-name").innerText = `Фильм:${random_fact[0][0]}`;
     })
-},1000)
+},5000)
