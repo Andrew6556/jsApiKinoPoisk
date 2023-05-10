@@ -55,23 +55,34 @@ function add_fact_about_movie(films_fact){
 function mtRandom(min, max){
     return Math.floor(Math.random() * (max - min + 1))
 }
-let c = ()=>{
-    
+function get_id(data){
+    let list_id = data.map(film => film.id)
+    return list_id[mtRandom(0,list_id.length -1)]
 }
+
 let count = 0;
+
 setInterval(function(){
     request(path_facts).then(fact=>{
-        let breakCheck1 = false;
+        let rm_fact_index = mtRandom(0,fact.length -1),
+            rm_id         = get_id(data_movie);
 
-        for (let count = 0; count < data_movie.length; count++){
-            for (let i = 0; i < fact.length; i++){
-                if(fact[i].id == data_movie[count].id){
-                    breakCheck1 = true
-                    return [add_fact_about_movie(fact[count]), data_movie[count].name]
-                }
+        console.log(fact[rm_fact_index])
+        while(true){
+            if(fact[rm_fact_index].id == rm_id){
+                console.log(fact[rm_fact_index].id,rm_id)
+                let formatted_fact = fact[rm_fact_index].items[random_fact].text.replace(/<\/?[^>]+(>|$)/g, "")
+                // if ()
+                let a = data_movie.map(film => {
+                    if (film.id == fact[rm_fact_index].id){
+                        console.log(film.name)
+                    }
+                })
+                // return [formatted_fact, data_movie[count].name]
+                // break
             }
-            if (breakCheck1) break;
         }
+        
     }).then(random_fact=>{
         count++
         if (count == 1){
@@ -79,6 +90,6 @@ setInterval(function(){
         }
         document.querySelector(".header__FactFilm-text").innerText = random_fact[0];
         document.querySelector(".header__FactFilm-name").innerText = `Фильм:${random_fact[1]}`;
-        // console.log(random_fact)
+        console.log(random_fact)
     })
 },1000)
