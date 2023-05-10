@@ -31,3 +31,14 @@ function ccc(num){
         })
     })
 }
+// .then(fact_film=>{
+    //         data_movie.push({
+    //             name_movie:data_film.nameRu,
+    //             id:data_film.kinopoiskId,
+    //             description:data_film.description,
+    //             fact:add_fact_about_movie(fact_film),
+    //         })
+    //         div_cards.push(new Card(data_film).wrapper)
+    //         console.log(data_movie)
+    //     }
+    // )
