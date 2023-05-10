@@ -55,23 +55,30 @@ function add_fact_about_movie(films_fact){
 function mtRandom(min, max){
     return Math.floor(Math.random() * (max - min + 1))
 }
-// setInterval(function(){
-//     request(path_facts).then(fact=>{
-//         let breakCheck1 = false;
+let c = ()=>{
+    
+}
+let count = 0;
+setInterval(function(){
+    request(path_facts).then(fact=>{
+        let breakCheck1 = false;
 
-//         for (let count = 0; count < data_movie.length; count++){
-//             for (let i = 0; i < fact.length; i++){
-//                 if(fact[i].id == data_movie[count].id){
-//                     // console.log(data_movie[count].id)
-//                     breakCheck1 = true
-//                     return [add_fact_about_movie(fact[count]), data_movie[count].name]
-//                     // break loop
-//                 }
-//             }
-//             if (breakCheck1) break;
-//         }
-//     }).then(random_fact=>{
-//         document.querySelector(".header__FactFilm-text").innerText = random_fact[0]
-//         // console.log(random_fact)
-//     })
-// },2000)
+        for (let count = 0; count < data_movie.length; count++){
+            for (let i = 0; i < fact.length; i++){
+                if(fact[i].id == data_movie[count].id){
+                    breakCheck1 = true
+                    return [add_fact_about_movie(fact[count]), data_movie[count].name]
+                }
+            }
+            if (breakCheck1) break;
+        }
+    }).then(random_fact=>{
+        count++
+        if (count == 1){
+            document.querySelector(".FactLoading").classList.toggle("FactLoading_active");
+        }
+        document.querySelector(".header__FactFilm-text").innerText = random_fact[0];
+        document.querySelector(".header__FactFilm-name").innerText = `Фильм:${random_fact[1]}`;
+        // console.log(random_fact)
+    })
+},1000)
