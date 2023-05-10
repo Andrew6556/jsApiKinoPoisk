@@ -139,6 +139,23 @@ h1, h2, h3, h4, h5, h6 {
   width: 96%;
 }
 
+.FactLoading {
+  animation: circle 1.8s cubic-bezier(0.06, -0.09, 0.89, 0.26) infinite normal running 0s none;
+  margin-top: 25%;
+}
+.FactLoading__text {
+  font-size: 30px;
+  line-height: 23px;
+}
+
+@keyframes circle {
+  0% {
+    color: black;
+  }
+  100% {
+    color: white;
+  }
+}
 .header {
   height: 105vh;
   background: #18181B;
@@ -219,12 +236,9 @@ h1, h2, h3, h4, h5, h6 {
   font-size: 30px;
   margin-bottom: 30px;
 }
-.header__FactFilm-text {
-  line-height: 20px;
+.header__FactFilm-content {
+  line-height: 18px;
   font-size: 20px;
-}
-.header__FactFilm-decor {
-  font-size: 30px;
 }
 
 .card {

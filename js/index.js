@@ -74,4 +74,4 @@ function mtRandom(min, max){
 //         document.querySelector(".header__FactFilm-text").innerText = random_fact[0]
 //         // console.log(random_fact)
 //     })
-// }.bind(this),5000)
+// },2000)

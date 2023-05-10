@@ -5,7 +5,23 @@
 .container{
     @include container(1200px)
 }
-
+.FactLoading{
+    animation: circle 1.8s cubic-bezier(0.06, -0.09, 0.89, 0.26) infinite normal running 0s none;
+    margin-top:25% ;
+    &__text{
+        font-size: 30px;
+        line-height: 23px;
+    }
+}
+@keyframes circle{
+    0%{
+        color: black;
+    }
+    100%{
+        color: white;
+    }   
+}
+// block
 .header {
     height: 105vh;
     background: #18181B;
@@ -84,15 +100,13 @@
             font-size: 30px;
             margin-bottom: 30px;
         }
-        &-text{
-            line-height: 20px;
+        &-content{
+            line-height: 18px;
             font-size: 20px;
-        }
-        &-decor{
-            font-size: 30px;
         }
     }
 }
+
 .card{
     width: 450px;
     height: 450px;
