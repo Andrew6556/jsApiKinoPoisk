@@ -47,7 +47,7 @@ function create_slider(){
 create_slider()
 
 
-function add_fact_about_movie(films_fact){
+function get_formatted_fact(films_fact){
     let random_fact = mtRandom(0,films_fact.items.length - 1);
     return films_fact.items[random_fact].text.replace(/<\/?[^>]+(>|$)/g, "")
 }
@@ -72,7 +72,7 @@ setInterval(function(){
                 console.log(fact[rm_fact_index].id, rm_id)
                 return data_movie.map(film => {
                     if (film.id == fact[rm_fact_index].id){
-                        return [film.name,add_fact_about_movie(fact[rm_fact_index])]
+                        return [film.name,get_formatted_fact(fact[rm_fact_index])]
                     }
                 }).filter(data => data !== undefined)
             }
