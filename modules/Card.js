@@ -8,7 +8,7 @@ export default class Card{
                 <div class="card__img">
                     <img class="card__img-item" src="${data.posterUrl}" alt="#">
                 </div>
-                <div class="card__title">${data.nameRu}</div>
+                <div class="card__title title">${data.nameRu}</div>
                 <div class="card__inner">
                     <div class="card__wrapper">
                         <p class="card__text">Режиссер:<span class="card__decor">Классный</span></p>
