@@ -17,9 +17,8 @@ export default class Card{
                     </div>
                     <button class="card__btn btn">Узнать больше</button>
                 </div>`;
-        // this.wrapper.querySelector(".card__btn_del").addEventListener("click", () =>{
-        //     this.wrapper.classList.add('animate');
-        //     setTimeout(() => this.wrapper.remove(), 1000);
-        // })
+        this.wrapper.querySelector(".card__btn").addEventListener("click", () =>{
+            document.querySelector(".modalFilm").classList.toggle("active")
+        })
     }
 }

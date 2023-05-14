@@ -69,7 +69,6 @@ setInterval(function(){
         while(true){
             let rm_fact_index = mtRandom(0,fact.length - 1);
             if(fact[rm_fact_index].id == rm_id){
-                console.log(fact[rm_fact_index].id, rm_id)
                 return data_movie.map(film => {
                     if (film.id == fact[rm_fact_index].id){
                         return [film.name,get_formatted_fact(fact[rm_fact_index])]
@@ -86,4 +85,4 @@ setInterval(function(){
         document.querySelector(".header__FactFilm-text").innerText = random_fact[0][1];
         document.querySelector(".header__FactFilm-name").innerText = `Фильм:${random_fact[0][0]}`;
     })
-},5000)
+},20000)
