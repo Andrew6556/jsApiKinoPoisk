@@ -3,7 +3,7 @@
 import Card from "../modules/Card.js";
 import Header from "../modules/Header.js";
 import Modal from "../modules/Modal.js";
-import {Slider} from "../modules/slider.js";
+import {Slider} from "../modules/Slider.js";
 
 
 let path_facts    = `data/fact_film.json`,
@@ -35,15 +35,44 @@ let request = (path) =>{
 }
 
 
+
+
+    //     // document.querySelector(".header__films").appendChild(new Slider(div_cards).wrapper)
+
 function create_slider(){
-    request(films).then(data =>{
-        let div_cards = data.map(item => {
+    Promise.all([request(films), request(films_trailer), request(movie_img)]).then(data=>{
+        return [data[0].map(item => {
             data_movie.push({name:item.nameRu,id:item.kinopoiskId,description:item.description})
             return new Card(item).wrapper
+        }), data[1], data[2]]
+    }).then(data=>{
+        data[0].forEach(card =>{
+            card.querySelector(".card__btn").addEventListener("click", (event) => {
+                let card_title = event.target.closest(".card").querySelector(".card__title").innerText,
+                    card_info  = data_movie.find(card => card.name == card_title);
+                
+                let url_trailer = data[1].map(trailer => {
+                    if(trailer.id == card_info.id){
+                        return trailer.items.url
+                    }
+                }).filter(data => data !== undefined)[0];
+
+                let film_img = data[2].find(img => img.id == card_info.id);
+                for (let i = 0; i < 3; i++){
+                    document.querySelectorAll(".modalFilm__img-item")[i].src = film_img.items[i].imageUrl
+                }
+                document.querySelector(".modalFilm__title").innerText        = card_info.name;
+                document.querySelector(".modalFilm__description").innerText  = card_info.description;
+                document.querySelector(".modalFilm__video-item").src         = url_trailer;
+            })
         })
-        document.querySelector(".header__films").appendChild(new Slider(div_cards).wrapper)
+        document.querySelector(".header__films").appendChild(new Slider(data[0]).wrapper)
+    })
+    .catch(error =>{
+        console.log(error)
     })
 }
+
 create_slider()
 
 
