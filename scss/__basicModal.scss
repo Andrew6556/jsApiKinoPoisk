@@ -16,6 +16,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        max-width: 100%;
         padding: 10px;
     }
     &__content{
@@ -34,7 +35,6 @@
         color: #f2bb15cb;
     }
 }
-
 .active{
     visibility: hidden;
     opacity: 0;
