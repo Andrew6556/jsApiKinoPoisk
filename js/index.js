@@ -34,10 +34,11 @@ let request = (path) =>{
     })
 }
 
+document.querySelector(".modalFilm__close").addEventListener("click", () =>{
+    document.querySelector(".modalFilm").classList.toggle("active")
+})
 
 
-
-    //     // document.querySelector(".header__films").appendChild(new Slider(div_cards).wrapper)
 
 function create_slider(){
     Promise.all([request(films), request(films_trailer), request(movie_img)]).then(data=>{
@@ -74,6 +75,16 @@ function create_slider(){
 }
 
 create_slider()
+
+document.querySelector(".form")?.addEventListener("submit", (link) =>{
+    console.log(link)
+    // link.preventDefault();
+    // if (modal.validation(link.target, data.add_card) !== false){
+    //     link.target.reset()
+    // }
+})
+
+
 
 
 function get_formatted_fact(films_fact){
