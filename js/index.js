@@ -35,7 +35,7 @@ let request = (path) =>{
     })
 }
 document.querySelector(".form").addEventListener("submit", (link) =>{
-    // link.preventDefault();
+    link.preventDefault();
     request("http://kinopoiskapiunofficial.tech/api/v2.1/films/search-by-keyword?keyword=титан&page=1").then(film => {
         console.log(film)
         let films = film.films.map(item => {
@@ -45,10 +45,10 @@ document.querySelector(".form").addEventListener("submit", (link) =>{
         })
         
         return films
-    }).then(films=>{
+    }).then(films =>{
         document.querySelector(".header__films").appendChild(new Slider(films).wrapper)
-
     })
+    
     // request("http://kinopoiskapiunofficial.tech/api/v2.1/films/511").then(film => {
     //     console.log(film)
     // })
