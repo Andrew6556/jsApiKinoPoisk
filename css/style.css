@@ -140,6 +140,10 @@ h1, h2, h3, h4, h5, h6 {
   width: 96%;
 }
 
+.header__films {
+  display: flex;
+}
+
 .FactLoading {
   margin-top: 25%;
 }

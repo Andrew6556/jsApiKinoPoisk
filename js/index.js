@@ -2,7 +2,6 @@
 
 import Card from "../modules/Card.js";
 import Header from "../modules/Header.js";
-import Modal from "../modules/Modal.js";
 import {Slider} from "../modules/Slider.js";
 
 
@@ -15,7 +14,9 @@ let path_facts    = `data/fact_film.json`,
 
 let data_movie = [];
 
-
+document.querySelector(".modalFilm__close").addEventListener("click", () =>{
+    document.querySelector(".modalFilm").classList.toggle("active")
+})
 
 let request = (path) =>{
     return new Promise((resolve, reject) =>{
@@ -33,10 +34,30 @@ let request = (path) =>{
         xhr.send();
     })
 }
+document.querySelector(".form").addEventListener("submit", (link) =>{
+    link.preventDefault();
+    request("http://kinopoiskapiunofficial.tech/api/v2.1/films/search-by-keyword?keyword=титан&page=1").then(film => {
+        console.log(film)
+        let films = film.films.map(item => {
+            console.log(item)
+            data_movie.push({name:item.nameRu,id:item.kinopoiskId,description:item.description})
+            return new Card(item).wrapper
+        })
+        
+        return films
+    }).then(films=>{
+        document.querySelector(".header__films").appendChild(new Slider(films).wrapper)
 
-document.querySelector(".modalFilm__close").addEventListener("click", () =>{
-    document.querySelector(".modalFilm").classList.toggle("active")
+    })
+    // request("http://kinopoiskapiunofficial.tech/api/v2.1/films/511").then(film => {
+    //     console.log(film)
+    // })
+    // link.preventDefault();
+    // if (modal.validation(link.target, data.add_card) !== false){
+    //     link.target.reset()
+    // }
 })
+
 
 
 
@@ -76,13 +97,7 @@ function create_slider(){
 
 create_slider()
 
-document.querySelector(".form")?.addEventListener("submit", (link) =>{
-    console.log(link)
-    // link.preventDefault();
-    // if (modal.validation(link.target, data.add_card) !== false){
-    //     link.target.reset()
-    // }
-})
+
 
 
 
