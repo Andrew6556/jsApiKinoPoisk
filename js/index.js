@@ -35,7 +35,7 @@ let request = (path) =>{
     })
 }
 document.querySelector(".form").addEventListener("submit", (link) =>{
-    link.preventDefault();
+    // link.preventDefault();
     request("http://kinopoiskapiunofficial.tech/api/v2.1/films/search-by-keyword?keyword=титан&page=1").then(film => {
         console.log(film)
         let films = film.films.map(item => {
@@ -95,7 +95,7 @@ function create_slider(){
     })
 }
 
-create_slider()
+// create_slider()
 
 
 
