@@ -10,7 +10,12 @@ let path_facts    = `data/fact_film.json`,
     films_trailer = `data/trailer.json`,
     movie_img     = `data/img_films.json`;
 
-
+let facts_films;
+window.onload = function () {
+    request(path_facts).then(fact=>{
+        facts_films = fact
+    })
+}
 
 let data_movie = [];
 
@@ -38,24 +43,7 @@ document.querySelector(".form").addEventListener("submit", (link) =>{
     link.preventDefault();
     request("http://kinopoiskapiunofficial.tech/api/v2.1/films/search-by-keyword?keyword=титан&page=1").then(film => {
         console.log(film)
-        let films = film.films.map(item => {
-            console.log(item)
-            data_movie.push({name:item.nameRu,id:item.kinopoiskId,description:item.description})
-            return new Card(item).wrapper
-        })
-        
-        return films
-    }).then(films =>{
-        document.querySelector(".header__films").appendChild(new Slider(films).wrapper)
     })
-    
-    // request("http://kinopoiskapiunofficial.tech/api/v2.1/films/511").then(film => {
-    //     console.log(film)
-    // })
-    // link.preventDefault();
-    // if (modal.validation(link.target, data.add_card) !== false){
-    //     link.target.reset()
-    // }
 })
 
 
@@ -95,7 +83,7 @@ function create_slider(){
     })
 }
 
-// create_slider()
+create_slider()
 
 
 
@@ -117,27 +105,29 @@ function get_id(data){
 
 let count = 0;
 
+
 setInterval(function(){
-    request(path_facts).then(fact=>{
-        let rm_id = get_id(data_movie);
-        // Попробуй сократить потом!!!
-        while(true){
-            let rm_fact_index = mtRandom(0,fact.length - 1);
-            if(fact[rm_fact_index].id == rm_id){
-                return data_movie.map(film => {
-                    if (film.id == fact[rm_fact_index].id){
-                        return [film.name,get_formatted_fact(fact[rm_fact_index])]
-                    }
-                }).filter(data => data !== undefined)
-            }
+    let rm_id = get_id(data_movie);
+    // Попробуй сократить потом!!!
+    while(true){
+        let rm_fact_index = mtRandom(0,facts_films.length - 1);
+        if(facts_films[rm_fact_index].id == rm_id){
+            let random_fact = data_movie.map(film => {
+                if (film.id == facts_films[rm_fact_index].id){
+                    return [film.name,get_formatted_fact(facts_films[rm_fact_index])]
+                }
+            }).filter(data => data !== undefined);
+            add_fact(random_fact)
+            break
         }
-        
-    }).then(random_fact=>{
-        count++
-        if (count == 1){
-            document.querySelector(".FactLoading").classList.toggle("FactLoading_active");
-        }
-        document.querySelector(".header__FactFilm-text").innerText = random_fact[0][1];
-        document.querySelector(".header__FactFilm-name").innerText = `Фильм:${random_fact[0][0]}`;
-    })
+    }
 },20000)
+
+function add_fact(random_fact){
+    count++
+    if (count == 1){
+        document.querySelector(".FactLoading").classList.toggle("FactLoading_active");
+    }
+    document.querySelector(".header__FactFilm-text").innerText = random_fact[0][1];
+    document.querySelector(".header__FactFilm-name").innerText = `Фильм:${random_fact[0][0]}`;
+}
