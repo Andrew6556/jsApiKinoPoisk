@@ -31,14 +31,34 @@ function ccc(num){
         })
     })
 }
-// .then(fact_film=>{
-    //         data_movie.push({
-    //             name_movie:data_film.nameRu,
-    //             id:data_film.kinopoiskId,
-    //             description:data_film.description,
-    //             fact:add_fact_about_movie(fact_film),
+// Promise.all([request(path_films), request(path_trailer), request(path_img)]).then(data=>{
+    //     console.log([data[0], data[1], data[2]])
+    //     let div_card = data[0].films.map(film => new Card(film).wrapper);
+    //     div_card.forEach(card =>{
+    //         card.querySelector(".card__btn").addEventListener("click", (event) => {
+    //             let div_title = event.target.closest(".card").querySelector(".card__title").innerText,
+    //                 card_info = data[0].films.find(card => card.nameRu == div_title);
+                
+                    
+    //             console.log(card_info)
+    //             let url_trailer = data[1].items.map(trailer => {
+    //                 if(trailer.filmId == card_info.filmId){
+    //                     return trailer.items.url
+    //                 }
+    //             }).filter(data => data !== undefined)[0];
+    //             console.log(url_trailer)
+    //             let film_img = data[2].find(img => img.filmId == card_info.filmId);
+    //             for (let i = 0; i < 3; i++){
+    //                 document.querySelectorAll(".modalFilm__img-item")[i].src = film_img.items[i].imageUrl
+    //             }
+    //             document.querySelector(".modalFilm__title").innerText        = card_info.nameRu;
+    //             document.querySelector(".modalFilm__description").innerText  = card_info.description;
+    //             document.querySelector(".modalFilm__video-item").src         = url_trailer;
     //         })
-    //         div_cards.push(new Card(data_film).wrapper)
-    //         console.log(data_movie)
-    //     }
-    // )
+    //     })
+    //     document.querySelector(".header__films").appendChild(new Slider(div_card).wrapper)
+    // })
+    
+    // .catch(error =>{
+    //     console.log(error)
+    // })

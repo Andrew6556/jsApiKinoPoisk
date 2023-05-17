@@ -22,3 +22,26 @@ export default class Card{
         })
     }
 }
+// .then(data=>{
+    //     data[0].forEach(card =>{
+    //         card.querySelector(".card__btn").addEventListener("click", (event) => {
+    //             let card_title = event.target.closest(".card").querySelector(".card__title").innerText,
+    //                 card_info  = data_movie.find(card => card.name == card_title);
+                
+    //             let url_trailer = data[1].map(trailer => {
+    //                 if(trailer.filmId == card_info.filmId){
+    //                     return trailer.items.url
+    //                 }
+    //             }).filter(data => data !== undefined)[0];
+
+    //             let film_img = data[2].find(img => img.filmId == card_info.filmId);
+    //             for (let i = 0; i < 3; i++){
+    //                 document.querySelectorAll(".modalFilm__img-item")[i].src = film_img.items[i].imageUrl
+    //             }
+    //             document.querySelector(".modalFilm__title").innerText        = card_info.name;
+    //             document.querySelector(".modalFilm__description").innerText  = card_info.description;
+    //             document.querySelector(".modalFilm__video-item").src         = url_trailer;
+    //         })
+    //     })
+    //     document.querySelector(".header__films").appendChild(new Slider(data[0]).wrapper)
+    // })

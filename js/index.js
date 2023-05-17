@@ -27,7 +27,7 @@ document.querySelector(".modalFilm__close").addEventListener("click", () =>{
 let request = (path) =>{
     return new Promise((resolve, reject) =>{
         const xhr = new XMLHttpRequest();
-        xhr.open("GET", `${path}`, true);
+        xhr.open("GET", path, true);
         xhr.onload = () => {
             if (xhr.status == 200){
                 resolve(JSON.parse(xhr.response))
@@ -40,70 +40,50 @@ let request = (path) =>{
         xhr.send();
     })
 }
-let c = "http://kinopoiskapiunofficial.tech/api/v2.1/films/search-by-keyword?keyword=титан&page=1";
+let c            = "http://kinopoiskapiunofficial.tech/api/v2.1/films/search-by-keyword?keyword=титан&page=1",
+    films_videos = id => `http://kinopoiskapiunofficial.tech/api/v2.2/films/${id}/videos`,
+    films_img    = id => `http://kinopoiskapiunofficial.tech/api/v2.2/films/${id}/images`;
+
+
 document.querySelector(".form").addEventListener("submit", (link) =>{
     link.preventDefault();
-    create_slider(c, )
+    // create_slider(c, )
+    request(c).then(data=>{
+        console.log(data)
+    })
 })
 
 
 
 
 function create_slider(path_films, path_trailer, path_img){
-    Promise.all([request(path_films), request(path_trailer), request(path_img)]).then(data=>{
-        console.log([data[0], data[1], data[2]])
-        let div_card = data[0].films.map(film => new Card(film).wrapper);
+    request(path_films).then(films =>{
+        let div_card = films.films.map(film => new Card(film).wrapper);
         div_card.forEach(card =>{
             card.querySelector(".card__btn").addEventListener("click", (event) => {
                 let div_title = event.target.closest(".card").querySelector(".card__title").innerText,
-                    card_info = data[0].films.find(card => card.nameRu == div_title);
-                
-                    
-                console.log(card_info)
-                let url_trailer = data[1].items.map(trailer => {
-                    if(trailer.filmId == card_info.filmId){
-                        return trailer.items.url
+                    card_info = films.films.find(card => card.nameRu == div_title);
+
+                Promise.all([request(films_videos(card_info.filmId)), request(films_img(card_info.filmId))]).then(data=>{
+                    console.log(data[0])
+                    console.log(data[0].items[0].url)
+                    for (let i = 0; i < 3; i++){
+                        document.querySelectorAll(".modalFilm__img-item")[i].src = data[1].items[i].imageUrl
                     }
-                }).filter(data => data !== undefined)[0];
-                console.log(url_trailer)
-                let film_img = data[2].find(img => img.filmId == card_info.filmId);
-                for (let i = 0; i < 3; i++){
-                    document.querySelectorAll(".modalFilm__img-item")[i].src = film_img.items[i].imageUrl
-                }
-                document.querySelector(".modalFilm__title").innerText        = card_info.nameRu;
-                document.querySelector(".modalFilm__description").innerText  = card_info.description;
-                document.querySelector(".modalFilm__video-item").src         = url_trailer;
+                    var url = data[0].items[0].url.replace('v', 'embed');
+                    document.querySelector(".modalFilm__title").innerText        = card_info.nameRu;
+                    document.querySelector(".modalFilm__description").innerText  = card_info.description;
+                    document.querySelector(".modalFilm__video-item").src         = url;
+                })
             })
         })
         document.querySelector(".header__films").appendChild(new Slider(div_card).wrapper)
     })
-    // .then(data=>{
-    //     data[0].forEach(card =>{
-    //         card.querySelector(".card__btn").addEventListener("click", (event) => {
-    //             let card_title = event.target.closest(".card").querySelector(".card__title").innerText,
-    //                 card_info  = data_movie.find(card => card.name == card_title);
-                
-    //             let url_trailer = data[1].map(trailer => {
-    //                 if(trailer.filmId == card_info.filmId){
-    //                     return trailer.items.url
-    //                 }
-    //             }).filter(data => data !== undefined)[0];
 
-    //             let film_img = data[2].find(img => img.filmId == card_info.filmId);
-    //             for (let i = 0; i < 3; i++){
-    //                 document.querySelectorAll(".modalFilm__img-item")[i].src = film_img.items[i].imageUrl
-    //             }
-    //             document.querySelector(".modalFilm__title").innerText        = card_info.name;
-    //             document.querySelector(".modalFilm__description").innerText  = card_info.description;
-    //             document.querySelector(".modalFilm__video-item").src         = url_trailer;
-    //         })
-    //     })
-    //     document.querySelector(".header__films").appendChild(new Slider(data[0]).wrapper)
-    // })
-    .catch(error =>{
-        console.log(error)
-    })
+
+    
 }
+
 
 create_slider(films, films_trailer, movie_img)
 
