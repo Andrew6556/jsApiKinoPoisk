@@ -373,3 +373,24 @@ h1, h2, h3, h4, h5, h6 {
   display: flex;
   justify-content: space-between;
 }
+
+.slider__navigation {
+  display: flex;
+  justify-content: center;
+}
+
+.slider__btn {
+  width: 150px;
+  padding: 10px 0;
+  border-radius: 10px;
+  box-shadow: 2px 3px 5px rgba(191, 0, 255, 0.7882352941);
+  color: white;
+  font-size: 20px;
+  margin: 14px;
+  transition: all 800ms ease-in-out 0s;
+}
+.slider__btn:hover {
+  color: black;
+  background: rgba(255, 255, 255, 0.411);
+  box-shadow: 2px 3px 5px rgba(191, 0, 255, 0.6784313725);
+}
