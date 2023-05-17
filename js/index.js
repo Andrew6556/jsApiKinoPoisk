@@ -18,7 +18,6 @@ window.onload = function () {
     })
 }
 
-let data_movie = [];
 
 document.querySelector(".modalFilm__close").addEventListener("click", () =>{
     document.querySelector(".modalFilm").classList.toggle("active")
@@ -40,16 +39,20 @@ let request = (path) =>{
         xhr.send();
     })
 }
-let c            = "http://kinopoiskapiunofficial.tech/api/v2.1/films/search-by-keyword?keyword=титан&page=1",
-    films_videos = id => `http://kinopoiskapiunofficial.tech/api/v2.2/films/${id}/videos`,
-    films_img    = id => `http://kinopoiskapiunofficial.tech/api/v2.2/films/${id}/images`;
+let keyword_search = name => `http://kinopoiskapiunofficial.tech/api/v2.1/films/search-by-keyword?keyword=${name}&page=1`,
+    films_videos   = id   => `http://kinopoiskapiunofficial.tech/api/v2.2/films/${id}/videos`,
+    films_img      = id   => `http://kinopoiskapiunofficial.tech/api/v2.2/films/${id}/images`;
 
 
-document.querySelector(".form").addEventListener("submit", (link) =>{
+document.querySelector(".form").addEventListener("submit", function(link){
     link.preventDefault();
-    // create_slider(c, )
-    request(c).then(data=>{
-        console.log(data)
+    let value_search = this.querySelector(".header__searchBox").value
+    request(keyword_search(value_search)).then(search_result =>{
+        if (search_result.films.length != 0){
+            document.querySelector(".slider").remove()
+            create_slider(keyword_search(value_search), films_videos, films_img)
+        }
+
     })
 })
 
@@ -62,11 +65,17 @@ function create_slider(path_films, path_trailer, path_img){
         div_card.forEach(card =>{
             card.querySelector(".card__btn").addEventListener("click", (event) => {
                 let div_title = event.target.closest(".card").querySelector(".card__title").innerText,
-                    card_info = films.films.find(card => card.nameRu == div_title);
-
-                Promise.all([request(films_videos(card_info.filmId)), request(films_img(card_info.filmId))]).then(data=>{
-                    console.log(data[0])
-                    console.log(data[0].items[0].url)
+                    film_year  = event.target.closest(".card").querySelector(".card__year").innerText,
+                    card_info = films.films.find(card => card.nameRu == div_title && card.year == film_year);
+                
+                // let promise_request = (path_films.search("json") != -1) ? Promise.all([request(card_info.filmId),request(path_img(card_info.filmId))]):
+                //                                             Promise.all([request(path_trailer(card_info.filmId)),request(path_img(card_info.filmId))]);
+                // console.log(promise_request)
+                // console.log("path_trailer".search("json"))
+                Promise.all([request(path_trailer(card_info.filmId)),request(path_img(card_info.filmId))]).then(data=>{
+                    // console.log(data[1])
+                    // console.log(data[0].items)
+                    // console.log(data[0].items.length)
                     for (let i = 0; i < 3; i++){
                         document.querySelectorAll(".modalFilm__img-item")[i].src = data[1].items[i].imageUrl
                     }
@@ -79,17 +88,10 @@ function create_slider(path_films, path_trailer, path_img){
         })
         document.querySelector(".header__films").appendChild(new Slider(div_card).wrapper)
     })
-
-
-    
 }
 
 
-create_slider(films, films_trailer, movie_img)
-
-
-
-
+create_slider(films, films_videos, films_img)
 
 
 function get_formatted_fact(films_fact){
