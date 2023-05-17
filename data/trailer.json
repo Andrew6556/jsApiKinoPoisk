@@ -1,8 +1,10 @@
-[
-    {"total":7,"items":{"url":"https://www.youtube.com/embed/rBZNLvBOXCo","name":"Музыкальный клип","site":"UNKNOWN"},"id":"515"},
-    {"total":2,"items":{"url":"https://www.youtube.com/embed/zRIbPQCNF-o","name":"Начало фильма","site":"YOUTUBE"},"id":"514"},
-    {"total":1,"items":{"url":"https://www.youtube.com/embed/X8NNmogVr5Q","name":"Трейлер","site":"YOUTUBE"},"id":"510"},
-    {"total":1,"items":{"url":"https://www.youtube.com/embed/9ivz4EVs-dc","name":"Трейлер","site":"KINOPOISK_WIDGET"},"id":"511"},
-    {"total":1,"items":{"url":"https://www.youtube.com/embed/dh2Ss_IgUDY","name":"Трейлер","site":"YOUTUBE"},"id":"512"},
-    {"total":2,"items":{"url":"https://www.youtube.com/embed/HgxBmM4hP2E","name":"Фрагмент (дублированный)","site":"YOUTUBE"},"id":"513"}
-]
+{
+    "items":[
+        {"total":7,"items":{"url":"https://www.youtube.com/embed/rBZNLvBOXCo","name":"Музыкальный клип","site":"UNKNOWN"},"filmId":"515"},
+        {"total":2,"items":{"url":"https://www.youtube.com/embed/zRIbPQCNF-o","name":"Начало фильма","site":"YOUTUBE"},"filmId":"514"},
+        {"total":1,"items":{"url":"https://www.youtube.com/embed/X8NNmogVr5Q","name":"Трейлер","site":"YOUTUBE"},"filmId":"510"},
+        {"total":1,"items":{"url":"https://www.youtube.com/embed/9ivz4EVs-dc","name":"Трейлер","site":"KINOPOISK_WfilmIdGET"},"filmId":"511"},
+        {"total":1,"items":{"url":"https://www.youtube.com/embed/dh2Ss_IgUDY","name":"Трейлер","site":"YOUTUBE"},"filmId":"512"},
+        {"total":2,"items":{"url":"https://www.youtube.com/embed/HgxBmM4hP2E","name":"Фрагмент (дублированный)","site":"YOUTUBE"},"filmId":"513"}
+    ]
+}

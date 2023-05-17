@@ -11,6 +11,7 @@ let path_facts    = `data/fact_film.json`,
     movie_img     = `data/img_films.json`;
 
 let facts_films;
+
 window.onload = function () {
     request(path_facts).then(fact=>{
         facts_films = fact
@@ -39,51 +40,72 @@ let request = (path) =>{
         xhr.send();
     })
 }
+let c = "http://kinopoiskapiunofficial.tech/api/v2.1/films/search-by-keyword?keyword=титан&page=1";
 document.querySelector(".form").addEventListener("submit", (link) =>{
     link.preventDefault();
-    request("http://kinopoiskapiunofficial.tech/api/v2.1/films/search-by-keyword?keyword=титан&page=1").then(film => {
-        console.log(film)
-    })
+    create_slider(c, )
 })
 
 
 
 
-function create_slider(){
-    Promise.all([request(films), request(films_trailer), request(movie_img)]).then(data=>{
-        return [data[0].map(item => {
-            data_movie.push({name:item.nameRu,id:item.kinopoiskId,description:item.description})
-            return new Card(item).wrapper
-        }), data[1], data[2]]
-    }).then(data=>{
-        data[0].forEach(card =>{
+function create_slider(path_films, path_trailer, path_img){
+    Promise.all([request(path_films), request(path_trailer), request(path_img)]).then(data=>{
+        console.log([data[0], data[1], data[2]])
+        let div_card = data[0].films.map(film => new Card(film).wrapper);
+        div_card.forEach(card =>{
             card.querySelector(".card__btn").addEventListener("click", (event) => {
-                let card_title = event.target.closest(".card").querySelector(".card__title").innerText,
-                    card_info  = data_movie.find(card => card.name == card_title);
+                let div_title = event.target.closest(".card").querySelector(".card__title").innerText,
+                    card_info = data[0].films.find(card => card.nameRu == div_title);
                 
-                let url_trailer = data[1].map(trailer => {
-                    if(trailer.id == card_info.id){
+                    
+                console.log(card_info)
+                let url_trailer = data[1].items.map(trailer => {
+                    if(trailer.filmId == card_info.filmId){
                         return trailer.items.url
                     }
                 }).filter(data => data !== undefined)[0];
-
-                let film_img = data[2].find(img => img.id == card_info.id);
+                console.log(url_trailer)
+                let film_img = data[2].find(img => img.filmId == card_info.filmId);
                 for (let i = 0; i < 3; i++){
                     document.querySelectorAll(".modalFilm__img-item")[i].src = film_img.items[i].imageUrl
                 }
-                document.querySelector(".modalFilm__title").innerText        = card_info.name;
+                document.querySelector(".modalFilm__title").innerText        = card_info.nameRu;
                 document.querySelector(".modalFilm__description").innerText  = card_info.description;
                 document.querySelector(".modalFilm__video-item").src         = url_trailer;
             })
         })
-        document.querySelector(".header__films").appendChild(new Slider(data[0]).wrapper)
+        document.querySelector(".header__films").appendChild(new Slider(div_card).wrapper)
     })
+    // .then(data=>{
+    //     data[0].forEach(card =>{
+    //         card.querySelector(".card__btn").addEventListener("click", (event) => {
+    //             let card_title = event.target.closest(".card").querySelector(".card__title").innerText,
+    //                 card_info  = data_movie.find(card => card.name == card_title);
+                
+    //             let url_trailer = data[1].map(trailer => {
+    //                 if(trailer.filmId == card_info.filmId){
+    //                     return trailer.items.url
+    //                 }
+    //             }).filter(data => data !== undefined)[0];
+
+    //             let film_img = data[2].find(img => img.filmId == card_info.filmId);
+    //             for (let i = 0; i < 3; i++){
+    //                 document.querySelectorAll(".modalFilm__img-item")[i].src = film_img.items[i].imageUrl
+    //             }
+    //             document.querySelector(".modalFilm__title").innerText        = card_info.name;
+    //             document.querySelector(".modalFilm__description").innerText  = card_info.description;
+    //             document.querySelector(".modalFilm__video-item").src         = url_trailer;
+    //         })
+    //     })
+    //     document.querySelector(".header__films").appendChild(new Slider(data[0]).wrapper)
+    // })
     .catch(error =>{
         console.log(error)
     })
 }
 
-create_slider()
+create_slider(films, films_trailer, movie_img)
 
 
 
@@ -106,22 +128,22 @@ function get_id(data){
 let count = 0;
 
 
-setInterval(function(){
-    let rm_id = get_id(data_movie);
-    // Попробуй сократить потом!!!
-    while(true){
-        let rm_fact_index = mtRandom(0,facts_films.length - 1);
-        if(facts_films[rm_fact_index].id == rm_id){
-            let random_fact = data_movie.map(film => {
-                if (film.id == facts_films[rm_fact_index].id){
-                    return [film.name,get_formatted_fact(facts_films[rm_fact_index])]
-                }
-            }).filter(data => data !== undefined);
-            add_fact(random_fact)
-            break
-        }
-    }
-},20000)
+// setInterval(function(){
+//     let rm_id = get_id(data_movie);
+//     // Попробуй сократить потом!!!
+//     while(true){
+//         let rm_fact_index = mtRandom(0,facts_films.length - 1);
+//         if(facts_films[rm_fact_index].id == rm_id){
+//             let random_fact = data_movie.map(film => {
+//                 if (film.id == facts_films[rm_fact_index].id){
+//                     return [film.name,get_formatted_fact(facts_films[rm_fact_index])]
+//                 }
+//             }).filter(data => data !== undefined);
+//             add_fact(random_fact)
+//             break
+//         }
+//     }
+// },20000)
 
 function add_fact(random_fact){
     count++
