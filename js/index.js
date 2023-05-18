@@ -6,9 +6,8 @@ import {Slider} from "../modules/Slider.js";
 
 
 let path_facts    = `data/fact_film.json`,
-    films         = `data/info_films.json`,
-    films_trailer = `data/trailer.json`,
-    movie_img     = `data/img_films.json`;
+    films         = `data/info_films.json`;
+
 
 let facts_films;
 
@@ -54,13 +53,11 @@ document.querySelector(".form").addEventListener("submit", function(link){
                 document.querySelector(".slider").remove()
             }
             create_slider(keyword_search(value_search), films_videos, films_img)
-            
         }else{
             document.querySelector(".slider").remove()
             document.querySelector(".header__NothingFound").classList.remove("header__NothingFound_active")
         }
     })
-    console.log(document.querySelector(".slider"))
 })
 
 
@@ -75,14 +72,7 @@ function create_slider(path_films, path_trailer, path_img){
                     film_year  = event.target.closest(".card").querySelector(".card__year").innerText,
                     card_info = films.films.find(card => card.nameRu == div_title && card.year == film_year);
                 
-                // let promise_request = (path_films.search("json") != -1) ? Promise.all([request(card_info.filmId),request(path_img(card_info.filmId))]):
-                //                                             Promise.all([request(path_trailer(card_info.filmId)),request(path_img(card_info.filmId))]);
-                // console.log(promise_request)
-                // console.log("path_trailer".search("json"))
                 Promise.all([request(path_trailer(card_info.filmId)),request(path_img(card_info.filmId))]).then(data=>{
-                    // console.log(data[1])
-                    // console.log(data[0].items)
-                    // console.log(data[0].items.length)
                     for (let i = 0; i < 3; i++){
                         document.querySelectorAll(".modalFilm__img-item")[i].src = data[1].items[i].imageUrl
                     }
@@ -109,36 +99,19 @@ function get_formatted_fact(films_fact){
 function mtRandom(min, max){
     return Math.floor(Math.random() * (max - min + 1))
 }
-function get_id(data){
-    let list_id = data.map(film => film.id)
-    return list_id[mtRandom(0,list_id.length - 1)]
-}
+
+setInterval(function(){
+        let rm_fact_index = mtRandom(0,facts_films.length - 1);
+        let random_fact = get_formatted_fact(facts_films[rm_fact_index])
+        add_fact(random_fact)
+},2000)
 
 let count = 0;
-
-
-// setInterval(function(){
-//     let rm_id = get_id(data_movie);
-//     // Попробуй сократить потом!!!
-//     while(true){
-//         let rm_fact_index = mtRandom(0,facts_films.length - 1);
-//         if(facts_films[rm_fact_index].id == rm_id){
-//             let random_fact = data_movie.map(film => {
-//                 if (film.id == facts_films[rm_fact_index].id){
-//                     return [film.name,get_formatted_fact(facts_films[rm_fact_index])]
-//                 }
-//             }).filter(data => data !== undefined);
-//             add_fact(random_fact)
-//             break
-//         }
-//     }
-// },20000)
 
 function add_fact(random_fact){
     count++
     if (count == 1){
-        document.querySelector(".FactLoading").classList.toggle("FactLoading_active");
+        document.querySelector(".FactLoading").classList.add("FactLoading_active");
     }
-    document.querySelector(".header__FactFilm-text").innerText = random_fact[0][1];
-    document.querySelector(".header__FactFilm-name").innerText = `Фильм:${random_fact[0][0]}`;
+    document.querySelector(".header__FactFilm-text").innerText = random_fact;
 }
