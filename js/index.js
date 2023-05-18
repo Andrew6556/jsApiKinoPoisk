@@ -46,14 +46,21 @@ let keyword_search = name => `http://kinopoiskapiunofficial.tech/api/v2.1/films/
 
 document.querySelector(".form").addEventListener("submit", function(link){
     link.preventDefault();
-    let value_search = this.querySelector(".header__searchBox").value
+    let value_search = this.querySelector(".header__searchBox").value;
     request(keyword_search(value_search)).then(search_result =>{
         if (search_result.films.length != 0){
-            document.querySelector(".slider").remove()
+            document.querySelector(".header__NothingFound").classList.add("header__NothingFound_active")
+            if(document.querySelector(".slider") != null){
+                document.querySelector(".slider").remove()
+            }
             create_slider(keyword_search(value_search), films_videos, films_img)
+            
+        }else{
+            document.querySelector(".slider").remove()
+            document.querySelector(".header__NothingFound").classList.remove("header__NothingFound_active")
         }
-
     })
+    console.log(document.querySelector(".slider"))
 })
 
 
