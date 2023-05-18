@@ -13,7 +13,7 @@ let facts_films;
 
 window.onload = function () {
     request(path_facts).then(fact=>{
-        facts_films = fact
+        facts_films = fact;
     })
 }
 
@@ -101,8 +101,8 @@ function mtRandom(min, max){
 }
 
 setInterval(function(){
-        let rm_fact_index = mtRandom(0,facts_films.length - 1);
-        let random_fact = get_formatted_fact(facts_films[rm_fact_index])
+        let rm_fact_index = mtRandom(0,facts_films.length - 1),
+            random_fact   = get_formatted_fact(facts_films[rm_fact_index])
         add_fact(random_fact)
 },2000)
 
