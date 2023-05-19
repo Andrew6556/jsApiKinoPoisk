@@ -1,12 +1,11 @@
 "use strict";
 
-import Card from "../modules/Card.js";
-import Header from "../modules/Header.js";
+import {Card} from "../modules/Card.js";
+import {Header} from "../modules/Header.js";
 import {Slider} from "../modules/Slider.js";
 
 
-let path_facts    = `data/fact_film.json`,
-    films         = `data/info_films.json`;
+
 
 
 let facts_films;
@@ -42,7 +41,9 @@ let request = (path) =>{
 }
 let keyword_search = name => `http://kinopoiskapiunofficial.tech/api/v2.1/films/search-by-keyword?keyword=${name}&page=1`,
     films_videos   = id   => `http://kinopoiskapiunofficial.tech/api/v2.2/films/${id}/videos`,
-    films_img      = id   => `http://kinopoiskapiunofficial.tech/api/v2.2/films/${id}/images`;
+    films_img      = id   => `http://kinopoiskapiunofficial.tech/api/v2.2/films/${id}/images`,
+    path_facts     = `data/fact_film.json`,
+    films          = `data/info_films.json`;
 
 
 document.querySelector(".form").addEventListener("submit", function(link){
@@ -72,14 +73,20 @@ function create_slider(path_films, path_trailer, path_img){
                 let div_title = event.target.closest(".card").querySelector(".card__title").innerText,
                     film_year  = event.target.closest(".card").querySelector(".card__year").innerText,
                     card_info = films.films.find(card => card.nameRu == div_title && card.year == film_year);
-                //нахождения того обьекта по которому был клик
+                    //нахождения того обьекта ,по которому был клик
 
                 Promise.all([request(path_trailer(card_info.filmId)),request(path_img(card_info.filmId))]).then(data=>{
                     for (let i = 0; i < 3; i++){
                         document.querySelectorAll(".modalFilm__img-item")[i].src = data[1].items[i].imageUrl
                     }
-                    var url = data[0].items[0].url.replace('v', 'embed');
-                    
+                    // console.log(data[0], "трейлеры")
+                    // console.log(data[1], "картинки")
+                    if (data[0].items[0].url.search("https://www.youtube.com/") == 0){
+                        // var url = data[0].items[0].url.replace('/v/', '/embed/');
+                        var url = data[0].items[0].url.search("/v/") == -1 ? data[0].items[0].url.replace('watch?v=', 'embed/'):
+                                                                            data[0].items[0].url.replace('/v/', '/embed/')
+                    }
+
                     document.querySelector(".modalFilm__title").innerText        = card_info.nameRu;
                     document.querySelector(".modalFilm__description").innerText  = card_info.description;
                     document.querySelector(".modalFilm__video-item").src         = url;
@@ -110,16 +117,17 @@ function mtRandom(min, max){
 
 function deduce_random_fact(){
     let count = 0;
+    count++
     return function (){
         setInterval(function(){
             let rm_fact_index = mtRandom(0,facts_films.length - 1),
                 random_fact   = get_formatted_fact(facts_films[rm_fact_index])
 
-            count++
             add_fact(random_fact, count)
         },20000)
     }
 }
+
 function add_fact(random_fact,count){
     if (count == 1){
         document.querySelector(".FactLoading").classList.add("FactLoading_active");

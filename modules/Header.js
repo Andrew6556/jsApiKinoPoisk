@@ -1,7 +1,7 @@
 "use strict";
 
 
-export default class Header{
+export class Header{
     constructor(){
         this.wrapper = document.createElement("header")
         this.wrapper.classList.add("header")
