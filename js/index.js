@@ -79,12 +79,15 @@ function create_slider(path_films, path_trailer, path_img){
                     for (let i = 0; i < 3; i++){
                         document.querySelectorAll(".modalFilm__img-item")[i].src = data[1].items[i].imageUrl
                     }
-                    // console.log(data[0], "трейлеры")
-                    // console.log(data[1], "картинки")
-                    if (data[0].items[0].url.search("https://www.youtube.com/") == 0){
-                        // var url = data[0].items[0].url.replace('/v/', '/embed/');
-                        var url = data[0].items[0].url.search("/v/") == -1 ? data[0].items[0].url.replace('watch?v=', 'embed/'):
-                                                                            data[0].items[0].url.replace('/v/', '/embed/')
+                    console.log(data[0], "трейлеры")
+                    console.log(data[1], "картинки")
+                    for(let i = 0 ; i < data[0].items.length;i++){
+                        if(data[0].items[i].url.search("https://www.youtube.com/") == 0){
+                            var url = data[0].items[i].url.search("/v/") == -1 ? data[0].items[i].url.replace('watch?v=', 'embed/'):
+                                                                            data[0].items[i].url.replace('/v/', '/embed/')
+                            // console.log(1)
+                            break
+                        }
                     }
 
                     document.querySelector(".modalFilm__title").innerText        = card_info.nameRu;
