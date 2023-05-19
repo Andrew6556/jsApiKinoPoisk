@@ -1,6 +1,6 @@
 "use strict";
 
-export class Card{
+export default class Card{
     constructor(data){
         this.wrapper = document.createElement("div");
         this.wrapper.classList.add("card");
