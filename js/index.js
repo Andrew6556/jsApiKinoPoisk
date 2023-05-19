@@ -35,7 +35,7 @@ let request = (path) =>{
             }
         };
         xhr.setRequestHeader('Content-type', 'application/json; charset=UTF-8');
-        xhr.setRequestHeader("X-API-KEY", '4dc0fb6b-92e7-4e5d-b3c6-960b4ce6443d');
+        xhr.setRequestHeader("X-API-KEY", '4ed6a4de-1c65-48b4-9d9b-922f9cfbd78e');
         xhr.send();
     })
 }
