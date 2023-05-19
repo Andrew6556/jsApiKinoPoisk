@@ -1,8 +1,8 @@
 "use strict";
 
-import Card from "/modules/card.js";
-import Header from "/modules/header.js";
-import Slider from "/modules/slider.js";
+import {Card} from "../modules/Card.js";
+import {Header} from "../modules/Header.js";
+import {Slider} from "../modules/Slider.js";
 
 
 

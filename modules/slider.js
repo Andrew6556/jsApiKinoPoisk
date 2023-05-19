@@ -1,7 +1,7 @@
 "use strict";
 
 
-export default class Slider{
+export class Slider{
     constructor(slides){
         // полуаем все карточки
         this.slides       = slides
