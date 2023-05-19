@@ -72,7 +72,7 @@ function create_slider(path_films, path_trailer, path_img){
             card.querySelector(".card__btn").addEventListener("click", (event) => {
                 let div_title = event.target.closest(".card").querySelector(".card__title").innerText,
                     film_year  = event.target.closest(".card").querySelector(".card__year").innerText,
-                    card_info = films.films.find(card => card.nameRu == div_title && card.year == film_year);
+                    card_info = films.films.find(film => film.nameRu == div_title && film.year == film_year);
                     //нахождения того обьекта ,по которому был клик
 
                 Promise.all([request(path_trailer(card_info.filmId)),request(path_img(card_info.filmId))]).then(data=>{
