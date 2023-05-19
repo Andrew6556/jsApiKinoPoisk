@@ -79,9 +79,11 @@ function create_slider(path_films, path_trailer, path_img){
                     adding_pictures_modal(data[1])
                     
                     for(let i = 0 ; i < data[0].items.length; i++){
+                        // Находим только ссылку на ютуб
                         if(data[0].items[i].url.search("https://www.youtube.com/") == 0){
                             var url = data[0].items[i].url.search("/v/") == -1 ? data[0].items[i].url.replace('watch?v=', 'embed/'):
                                                                             data[0].items[i].url.replace('/v/', '/embed/')
+                            // форматируем ее чтоб была рабочей
                             break
                         }
                     }
@@ -95,6 +97,7 @@ function create_slider(path_films, path_trailer, path_img){
     })
 }
 function adding_pictures_modal(images){
+    // при отсутвие допустимого значения картинок, скрываем блок modalFilm__galley
     if(images.items.length > 3){
         for (let i = 0; i < 3; i++){
             document.querySelectorAll(".modalFilm__img-item")[i].src = images.items[i].imageUrl
