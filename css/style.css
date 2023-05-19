@@ -342,9 +342,10 @@ h1, h2, h3, h4, h5, h6 {
 
 .modalFilm__content {
   width: 500px;
-  background: #fcfcfc;
+  background: rgba(53, 42, 84, 0.6431372549);
   box-shadow: none;
   position: static;
+  box-shadow: 1px 1px 2px 3px rgba(255, 255, 255, 0.445);
 }
 .modalFilm__close {
   top: 8%;
@@ -356,8 +357,8 @@ h1, h2, h3, h4, h5, h6 {
   position: relative;
   overflow: hidden;
   padding-right: 56.25%;
-  width: 80%;
-  margin-right: 5px;
+  width: 100%;
+  height: 301px;
 }
 .modalFilm__video iframe {
   -o-object-fit: cover;
@@ -371,6 +372,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 .modalFilm__title {
   font-size: 32px;
+  color: white;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   margin-bottom: 5px;
 }
@@ -378,21 +380,26 @@ h1, h2, h3, h4, h5, h6 {
   padding: 15px;
   margin-bottom: 10px;
   font-weight: 600;
-  color: rgba(26, 24, 24, 0.801);
+  font-family: Georgia, "Times New Roman", Times, serif;
+  color: rgba(253, 253, 253, 0.712);
 }
 .modalFilm__galley img {
   position: relative;
-  width: 100px;
+  width: 235px;
+  height: 82px;
+  padding: 0 5px;
 }
 .modalFilm__galley-title {
   font-size: 16px;
-  font-weight: 500;
+  font-weight: 600;
   padding: 3px;
+  color: rgba(253, 253, 253, 0.712);
   display: inline-block;
 }
 .modalFilm__inner {
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
 .slider__navigation {

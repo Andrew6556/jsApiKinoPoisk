@@ -66,7 +66,7 @@ document.querySelector(".form").addEventListener("submit", function(link){
 
 function create_slider(path_films, path_trailer, path_img){
     request(path_films).then(films =>{
-        // создаем карточки полученных данных
+        // создаем карточки из полученных данных
         let div_card = films.films.map(film => new Card(film).wrapper);
         div_card.forEach(card =>{
             card.querySelector(".card__btn").addEventListener("click", (event) => {
@@ -76,20 +76,15 @@ function create_slider(path_films, path_trailer, path_img){
                     //нахождения того обьекта ,по которому был клик
 
                 Promise.all([request(path_trailer(card_info.filmId)),request(path_img(card_info.filmId))]).then(data=>{
-                    for (let i = 0; i < 3; i++){
-                        document.querySelectorAll(".modalFilm__img-item")[i].src = data[1].items[i].imageUrl
-                    }
-                    console.log(data[0], "трейлеры")
-                    console.log(data[1], "картинки")
-                    for(let i = 0 ; i < data[0].items.length;i++){
+                    adding_pictures_modal(data[1])
+                    
+                    for(let i = 0 ; i < data[0].items.length; i++){
                         if(data[0].items[i].url.search("https://www.youtube.com/") == 0){
                             var url = data[0].items[i].url.search("/v/") == -1 ? data[0].items[i].url.replace('watch?v=', 'embed/'):
                                                                             data[0].items[i].url.replace('/v/', '/embed/')
-                            // console.log(1)
                             break
                         }
                     }
-
                     document.querySelector(".modalFilm__title").innerText        = card_info.nameRu;
                     document.querySelector(".modalFilm__description").innerText  = card_info.description;
                     document.querySelector(".modalFilm__video-item").src         = url;
@@ -99,7 +94,17 @@ function create_slider(path_films, path_trailer, path_img){
         document.querySelector(".header__films").appendChild(new Slider(div_card).wrapper)
     })
 }
+function adding_pictures_modal(images){
+    if(images.items.length > 3){
+        for (let i = 0; i < 3; i++){
+            document.querySelectorAll(".modalFilm__img-item")[i].src = images.items[i].imageUrl
+            document.querySelector(".modalFilm__galley").style.display = 'block';
+        }
+    }else{
+        document.querySelector(".modalFilm__galley").style.display = 'none';
+    }
 
+}
 
 create_slider(films, films_videos, films_img)
 
@@ -130,7 +135,6 @@ function deduce_random_fact(){
         },20000)
     }
 }
-
 function add_fact(random_fact,count){
     if (count == 1){
         document.querySelector(".FactLoading").classList.add("FactLoading_active");

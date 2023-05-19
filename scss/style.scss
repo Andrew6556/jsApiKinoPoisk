@@ -116,7 +116,6 @@
         justify-content: center;
     }
     &__FactFilm {
-        // display: none;
         width: 450px;
         height: 450px;
         background: linear-gradient(109.69deg, rgba(29, 66, 162, 0.6) 12.26%, rgba(53, 72, 222, 0.6) 49.27%, rgba(0, 0, 0, 0.6) 65.36%, rgba(255, 0, 79, 0.6) 87.89%, rgba(73, 49, 71, 0.6) 115.24%);
@@ -209,9 +208,10 @@
 .modalFilm{
     &__content{
         width: 500px;
-        background: #fcfcfc;
+        background: #352a54a4;
         box-shadow: none;
         position: static;
+        box-shadow: 1px 1px 2px 3px rgba(255, 255, 255, 0.445);
     }
     &__close{
         top: 8%;
@@ -223,8 +223,8 @@
         position: relative;
         overflow: hidden;
         padding-right: 56.25%;
-        width: 80%;
-        margin-right: 5px;
+        width: 100%;
+        height: 301px;
         & iframe{
             object-fit: cover;
             position: absolute;
@@ -237,6 +237,7 @@
     }
     &__title{
         font-size: 32px;
+        color: white;
         font-family:Verdana, Geneva, Tahoma, sans-serif;
         margin-bottom: 5px;
     }
@@ -244,23 +245,28 @@
         padding: 15px;
         margin-bottom: 10px;
         font-weight: 600;
-        color: rgba(26, 24, 24, 0.801);
+        font-family: Georgia, 'Times New Roman', Times, serif;
+        color: rgba(253, 253, 253, 0.712);
     }
     &__galley{
         & img{
             position: relative;
-            width: 100px;
+            width: 235px;
+            height: 82px;
+            padding: 0 5px;
         }
         &-title{
             font-size: 16px;
-            font-weight: 500;
+            font-weight: 600;
             padding: 3px;
+            color: rgba(253, 253, 253, 0.712);
             display: inline-block;
         }
     }
     &__inner{
         display: flex;
         justify-content: space-between;
+        align-items: center;
     }
 }
 
