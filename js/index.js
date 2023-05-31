@@ -35,7 +35,8 @@ document.querySelector(".form").addEventListener("submit", async function(link){
     let value_search = this.querySelector(".header__searchBox").value;
         
     let result_search = await fetch(keyword_search(value_search), options),
-        found_movies  = await result_search.json()
+        found_movies  = await result_search.json();
+        
     if (found_movies.films.length != 0){
         document.querySelector(".header__NothingFound").classList.add("header__NothingFound_active")
         if(document.querySelector(".slider") != null){
