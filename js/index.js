@@ -6,22 +6,55 @@ import {Slider} from "../modules/Slider.js";
 
 
 
+let keyword_search = name => `http://kinopoiskapiunofficial.tech/api/v2.1/films/search-by-keyword?keyword=${name}&page=1`,
+    films_videos   = id   => `http://kinopoiskapiunofficial.tech/api/v2.2/films/${id}/videos`,
+    films_img      = id   => `http://kinopoiskapiunofficial.tech/api/v2.2/films/${id}/images`,
+    path_facts     = `data/fact_film.json`,
+    films          = `data/info_films.json`;
 
 
-let facts_films;
 
-window.onload = function () {
-    request(path_facts).then(fact=>{
-        facts_films = fact;
-    })
+
+let params = {
+    headers: {
+        'X-API-KEY': '4ed6a4de-1c65-48b4-9d9b-922f9cfbd78e',
+        'Content-Type': 'application/json; charset=UTF-8',
+    },
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 let header = new Header().wrapper;
 document.querySelector(".wrapper").appendChild(header);
 
-document.querySelector(".modalFilm__close").addEventListener("click", () =>{
-    document.querySelector(".modalFilm").classList.toggle("active")
-})
+// document.querySelector(".modalFilm__close").addEventListener("click", () =>{
+//     document.querySelector(".modalFilm").classList.toggle("active")
+// })
 
 let request = (path) =>{
     return new Promise((resolve, reject) =>{
@@ -39,29 +72,25 @@ let request = (path) =>{
         xhr.send();
     })
 }
-let keyword_search = name => `http://kinopoiskapiunofficial.tech/api/v2.1/films/search-by-keyword?keyword=${name}&page=1`,
-    films_videos   = id   => `http://kinopoiskapiunofficial.tech/api/v2.2/films/${id}/videos`,
-    films_img      = id   => `http://kinopoiskapiunofficial.tech/api/v2.2/films/${id}/images`,
-    path_facts     = `data/fact_film.json`,
-    films          = `data/info_films.json`;
 
 
-document.querySelector(".form").addEventListener("submit", function(link){
-    link.preventDefault();
-    let value_search = this.querySelector(".header__searchBox").value;
-    request(keyword_search(value_search)).then(search_result =>{
-        if (search_result.films.length != 0){
-            document.querySelector(".header__NothingFound").classList.add("header__NothingFound_active")
-            if(document.querySelector(".slider") != null){
-                document.querySelector(".slider").remove()
-            }
-            create_slider(keyword_search(value_search), films_videos, films_img)
-        }else{
-            document.querySelector(".slider").remove()
-            document.querySelector(".header__NothingFound").classList.remove("header__NothingFound_active")
-        }
-    })
-})
+
+// document.querySelector(".form").addEventListener("submit", function(link){
+//     link.preventDefault();
+//     let value_search = this.querySelector(".header__searchBox").value;
+//     request(keyword_search(value_search)).then(search_result =>{
+//         if (search_result.films.length != 0){
+//             document.querySelector(".header__NothingFound").classList.add("header__NothingFound_active")
+//             if(document.querySelector(".slider") != null){
+//                 document.querySelector(".slider").remove()
+//             }
+//             create_slider(keyword_search(value_search), films_videos, films_img)
+//         }else{
+//             document.querySelector(".slider").remove()
+//             document.querySelector(".header__NothingFound").classList.remove("header__NothingFound_active")
+//         }
+//     })
+// })
 
 
 function create_slider(path_films, path_trailer, path_img){
@@ -111,9 +140,6 @@ function adding_pictures_modal(images){
 
 create_slider(films, films_videos, films_img)
 
-deduce_random_fact()()
-
-
 
 function get_formatted_fact(films_fact){
     // получаем отредактированный рандомный факт
@@ -126,21 +152,18 @@ function mtRandom(min, max){
     return Math.floor(Math.random() * (max - min + 1))
 }
 
-function deduce_random_fact(){
-    let count = 0;
-    count++
-    return function (){
-        setInterval(function(){
-            let rm_fact_index = mtRandom(0,facts_films.length - 1),
-                random_fact   = get_formatted_fact(facts_films[rm_fact_index])
+async function deduce_random_fact(){
+    return await new Promise(resolve => setInterval(async function(){
+        let get_data   = await fetch(path_facts, params),
+            facts_films = await get_data.json();
 
-            add_fact(random_fact, count)
-        },20000)
-    }
+        let rm_fact_index = mtRandom(0,facts_films.length - 1);
+        resolve(get_formatted_fact(facts_films[rm_fact_index]))
+    }, 1000));
 }
-function add_fact(random_fact,count){
-    if (count == 1){
+deduce_random_fact().then(random_fact =>{
+    if (random_fact){
         document.querySelector(".FactLoading").classList.add("FactLoading_active");
     }
     document.querySelector(".header__FactFilm-text").innerText = random_fact;
-}
+})
