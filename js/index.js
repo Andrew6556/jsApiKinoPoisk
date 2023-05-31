@@ -30,8 +30,28 @@ document.querySelector(".modalFilm__close").addEventListener("click", () =>{
     document.querySelector(".modalFilm").classList.toggle("active")
 })
 
-async function create_slider(path_trailer, path_img){
-    let response_films = await fetch(films, options),
+document.querySelector(".form").addEventListener("submit", async function(link){
+    link.preventDefault();
+    let value_search = this.querySelector(".header__searchBox").value;
+        
+    let result_search = await fetch(keyword_search(value_search), options),
+        found_movies  = await result_search.json()
+    if (found_movies.films.length != 0){
+        document.querySelector(".header__NothingFound").classList.add("header__NothingFound_active")
+        if(document.querySelector(".slider") != null){
+            document.querySelector(".slider").remove()
+        }
+        create_slider(films_videos, films_img, keyword_search(value_search))
+            .then(div_cards => document.querySelector(".header__films").appendChild(new Slider(div_cards).wrapper))
+
+    }else{
+        document.querySelector(".slider").remove()
+        document.querySelector(".header__NothingFound").classList.remove("header__NothingFound_active")
+    }
+})
+
+async function create_slider(path_trailer, path_img, path_films){
+    let response_films = await fetch(path_films, options),
         initial_films  = await response_films.json();
 
     let div_card = initial_films.films.map(film  => new Card(film).wrapper);
@@ -96,26 +116,9 @@ function get_working_link(links){
     return formatted_link
 }
 
-create_slider(films_videos, films_img)
+create_slider(films_videos, films_img, films)
     .then(div_cards => document.querySelector(".header__films").appendChild(new Slider(div_cards).wrapper))
 
-
-document.querySelector(".form").addEventListener("submit", function(link){
-    link.preventDefault();
-    let value_search = this.querySelector(".header__searchBox").value;
-    request(keyword_search(value_search)).then(search_result =>{
-        if (search_result.films.length != 0){
-            document.querySelector(".header__NothingFound").classList.add("header__NothingFound_active")
-            if(document.querySelector(".slider") != null){
-                document.querySelector(".slider").remove()
-            }
-            create_slider(keyword_search(value_search), films_videos, films_img)
-        }else{
-            document.querySelector(".slider").remove()
-            document.querySelector(".header__NothingFound").classList.remove("header__NothingFound_active")
-        }
-    })
-})
 
 
 
